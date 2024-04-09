@@ -27,7 +27,7 @@
 <body>
 
     <div class="floating_btn">
-        <a target="_blank" href="https://api.whatsapp.com/send/?phone=+447305177221&text=">
+        <a target="_blank" href="whatsapp://send?phone=+447305177221">
           <div class="contact_icon">
             <i class="fa fa-whatsapp my-float"></i>
           </div>
@@ -709,13 +709,21 @@
                             "Message: " + formData.get("note");
 
             // Encode message for WhatsApp URL
-            const encodedMessage = encodeURIComponent(message);
-
+            const encodedMessage = encodeURIComponent(formData.get("note"));
+            console.log("whatsapp://send?phone=+447305177221&text="+encodeURIComponent(formData.get("note")))
+            if(formData.get("note").length>0){
+            const newTab = window.open("whatsapp://send?phone=+447305177221&text="+formData.get("note"), "_blank");
+            }else{
+                const newTab = window.open("whatsapp://send?phone=+447305177221", "_blank");
+            }
+    // If the browser blocks the new tab, provide a fallback link
+    if (!newTab) {
+        window.location.href = "whatsapp://send?phone=+447305177221&text="+encodeURIComponent(formData.get("note"));
+    }
+            
             // WhatsApp URL with your phone number and encoded message
-            const whatsappURL = "https://api.whatsapp.com/send/?phone=+447305177221&text=" + encodedMessage;
+           
 
-            // Redirect to WhatsApp
-            window.location.href = whatsappURL;
         });
         
 
@@ -734,7 +742,7 @@
             const encodedMessage = encodeURIComponent(message);
 
             // Gmail URL with encoded message
-            const gmailURL = "mailto:mohitbanda84@yahoo.com?subject=Consultancy%20Request&body=" + encodedMessage;
+            const gmailURL = "mailto:mohitbanda84@yahoo.com?subject=Consultancy%20Request&body=" + message;
 
             // Redirect to Gmail
             window.location.href = gmailURL;

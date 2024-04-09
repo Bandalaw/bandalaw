@@ -27,7 +27,7 @@
 <body>
 
     <div class="floating_btn">
-        <a target="_blank" href="https://wa.me/9814419560">
+        <a target="_blank" href="whatsapp://send?phone=+447305177221">
           <div class="contact_icon">
             <i class="fa fa-whatsapp my-float"></i>
           </div>
@@ -328,7 +328,12 @@
             const encodedMessage = encodeURIComponent(message);
 
             // WhatsApp URL with your phone number and encoded message
-            const whatsappURL = "https://api.whatsapp.com/send/?phone=+447305177221&text=" + encodedMessage;
+            if(formData.get("note").length>0){
+            const newTab = window.open("whatsapp://send?phone=+447305177221&text="+formData.get("note"), "_blank");
+            }else{
+                const newTab = window.open("whatsapp://send?phone=+447305177221", "_blank");
+            }
+           
 
             // Redirect to WhatsApp
             window.location.href = whatsappURL;
